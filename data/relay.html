@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Counter</title>
+    <meta name="viewport" content="width=device-width">
+    <style type="text/css">
+	
+	#centerapp { 
+		width: 900px; 
+		margin: 0 auto; 
+	}
+	
+    .container {
+        width: 450px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .gauge {
+        width: 450px;
+        height: 450px;
+    }
+	
+	button {
+		position: relative;
+		background-color: #4CAF50;
+		border: none;
+		font-size: 28px;
+		color: #FFFF00;
+		padding: 20px;
+		width: 200px;
+		-webkit-user-select: none;
+		vertical-align: middle;
+		text-align: center;
+		text-decoration: none;
+		overflow: hidden;
+		cursor: pointer;
+	}
+	
+	
+    </style>
+</head>
+
+<body>
+	<div id="centerapp" ><b>TRIM/TILT CONTROL</b></div>
+	<button id="1" class="button" type="button">UP</button> 
+	<button id="0" class="button" type="button">DOWN</button>
+	</div>
+	<script src="jquery-1.12.3.min.js"></script>
+	<script>
+		touchStart1 = function(e) {
+		console.log("#1D");
+		connection.send("#1D");
+		}
+		
+		touchEnd1 = function(e) {
+		console.log("#1U");
+		connection.send("#1U");
+		}
+		
+		touchStart2 = function(e) {
+		console.log("#0D");
+		connection.send("#0D");
+		}
+		
+		touchEnd2 = function(e) {
+		console.log("#0U");
+		connection.send("#0U");
+		}
+
+		function addListeners(){
+		
+		document.getElementById('0').addEventListener("touchstart", touchStart2);
+		document.getElementById('0').addEventListener("touchend", touchEnd2);
+		document.getElementById('1').addEventListener("touchstart", touchStart1);
+		document.getElementById('1').addEventListener("touchend", touchEnd1);
+		
+			
+			}
+window.addEventListener("load", addListeners); 
+
+		function mouseDown(e) {
+		console.log("Down" + e.id);
+		connection.send("#" + e.id + "D");
+		}
+		
+		function mouseUp(e) {
+		console.log("Up" + e.id);
+		connection.send("#" + e.id + "U");
+		}
+		
+	</script>
+    <script type="text/javascript">
+	
+	var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
+		connection.onopen = function () {  connection.send('Relay'); };
+		console.log("temp connection opened");
+		connection.onerror = function (error) { console.log('WebSocket Error ', error); };
+	
+	function buttonclick(e) {
+			connection.send("#" + e.id);
+	}
+    </script>
+</body>
+
+</html>
