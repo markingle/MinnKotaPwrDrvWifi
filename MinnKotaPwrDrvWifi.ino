@@ -13,13 +13,16 @@ unsigned int state;
 uint8_t remote_ip;
 uint8_t socketNumber;
 
-const char WiFiAPPSK[] = "trimntilt";
+const char WiFiAPPSK[] = "Mk";
 
 #define USE_SERIAL Serial
 #define DBG_OUTPUT_PORT Serial
 
-int LED1 = 14;
-int LED2 = 12;
+
+//Yse the onboard LEDs for prototyping the code to support controling the PowerDriver.
+//These will need to be updated to the GPIO pins for each control circuit.
+int LED1 = 2;
+int LED2 = 16;
 //int button = 5;
 
 //boolean LED1State = false;
@@ -140,7 +143,7 @@ void setupWiFi()
 {
   WiFi.mode(WIFI_AP);
   
-  String AP_NameString = "Nauticstar_TnT";
+  String AP_NameString = "MinnKotaPowerDrive";
 
   char AP_NameChar[AP_NameString.length() + 1];
   memset(AP_NameChar, 0, AP_NameString.length() + 1);
