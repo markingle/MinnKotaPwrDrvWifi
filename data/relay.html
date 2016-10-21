@@ -44,9 +44,16 @@
 </head>
 
 <body>
-	<div id="centerapp" ><b>TRIM/TILT CONTROL</b></div>
-	<button id="1" class="button" type="button">UP</button> 
-	<button id="0" class="button" type="button">DOWN</button>
+	<div id="centerapp" ><b>PowerDriver Protoype Test App</b></div>
+	<label for="points">SPEED CONTROL</label>
+	<input type="range" name="points" id="points" value="50" min="0" max="100">
+	<button id="ConstantOn" class="button" type="button">Constant On</button> 
+	<button id="OnOff" class="button" type="button">ON/OFF</button>
+	<button id="Momentary" class="button" type="button">Momentary</button>
+	<button id="Left" class="button" type="button">Left Turn</button>
+	<button id="Right" class="button" type="button">Right Turn</button>
+	<button id="TestLED" class="button" type="button">Test Comms</button>
+	
 	</div>
 	<script src="jquery-1.12.3.min.js"></script>
 	<script>
