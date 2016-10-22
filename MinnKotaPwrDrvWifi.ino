@@ -65,7 +65,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
             if (payload[0] == '#')
               {
                 Serial.printf("[%u] Relay Control Msg: %s\n", num, payload);
-                if (payload[1] == '1')
+                if (payload[1] == 'C')
                 {
                   if (payload[2] == 'D')
                     {
@@ -79,7 +79,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
                     }
                   break;
                 }
-                if (payload[1] == '0')
+                if (payload[1] == 'I')
                 {
                   if (payload[2] == 'D')
                     {

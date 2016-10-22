@@ -47,54 +47,63 @@
 	<div id="centerapp" ><b>PowerDriver Protoype Test App</b></div>
 	<label for="points">SPEED CONTROL</label>
 	<input type="range" name="points" id="points" value="50" min="0" max="100">
-	<button id="ConstantOn" class="button" type="button">Constant On</button> 
-	<button id="OnOff" class="button" type="button">ON/OFF</button>
-	<button id="Momentary" class="button" type="button">Momentary</button>
-	<button id="Left" class="button" type="button">Left Turn</button>
-	<button id="Right" class="button" type="button">Right Turn</button>
-	<button id="TestLED" class="button" type="button">Test Comms</button>
+	<button id="C" class="button" type="button">Constant On</button> 
+	<button id="I" class="button" type="button">ON/OFF</button>
+	<button id="M" class="button" type="button">Momentary</button>
+	<button id="L" class="button" type="button">Left Turn</button>
+	<button id="R" class="button" type="button">Right Turn</button>
+	<button id="T" class="button" type="button">Test Comms</button>
 	
 	</div>
 	<script src="jquery-1.12.3.min.js"></script>
 	<script>
 		touchStart1 = function(e) {
-		console.log("#1D");
-		connection.send("#1D");
+		console.log("#CD");
+		connection.send("#CD");
 		}
 		
 		touchEnd1 = function(e) {
-		console.log("#1U");
-		connection.send("#1U");
+		console.log("#CU");
+		connection.send("#CU");
 		}
 		
 		touchStart2 = function(e) {
-		console.log("#0D");
-		connection.send("#0D");
+		console.log("#ID");
+		connection.send("#ID");
 		}
 		
 		touchEnd2 = function(e) {
-		console.log("#0U");
-		connection.send("#0U");
+		console.log("#IU");
+		connection.send("#IU");
 		}
 
 		function addListeners(){
 		
-		document.getElementById('0').addEventListener("touchstart", touchStart2);
-		document.getElementById('0').addEventListener("touchend", touchEnd2);
-		document.getElementById('1').addEventListener("touchstart", touchStart1);
-		document.getElementById('1').addEventListener("touchend", touchEnd1);
+		document.getElementById('C').addEventListener("touchstart", touchStart1);
+		document.getElementById('C').addEventListener("touchend", touchEnd1);
+		document.getElementById('I').addEventListener("touchstart", touchStart2);
+		document.getElementById('I').addEventListener("touchend", touchEnd2);
+		document.getElementById('M').addEventListener("touchstart", touchStart2);
+		document.getElementById('M').addEventListener("touchend", touchEnd2);
+		document.getElementById('L').addEventListener("touchstart", touchStart1);
+		document.getElementById('L').addEventListener("touchend", touchEnd1);
+		document.getElementById('R').addEventListener("touchstart", touchStart2);
+		document.getElementById('R').addEventListener("touchend", touchEnd2);
+		document.getElementById('T').addEventListener("touchstart", touchStart1);
+		document.getElementById('T').addEventListener("touchend", touchEnd1);
+
 		
 			
 			}
 window.addEventListener("load", addListeners); 
 
 		function mouseDown(e) {
-		console.log("Down" + e.id);
+		console.log("Down " + e.id);
 		connection.send("#" + e.id + "D");
 		}
 		
 		function mouseUp(e) {
-		console.log("Up" + e.id);
+		console.log("Up " + e.id);
 		connection.send("#" + e.id + "U");
 		}
 		
