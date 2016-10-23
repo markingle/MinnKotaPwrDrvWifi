@@ -46,7 +46,7 @@
 <body>
 	<div id="centerapp" ><b>PowerDriver Protoype Test App</b></div>
 	<label for="points">SPEED CONTROL</label>
-	<input type="range" name="speed_name" id="speed_id" value="0" min="0" max="255" onchange="connection.send(this.value)">
+	<input type="range" name="speed_name" id="speed_id" value="0" min="0" max="1023" onchange="connection.send(this.value)">
 	<button id="C" class="button" type="button">Constant On</button> 
 	<button id="I" class="button" type="button">ON/OFF</button>
 	<button id="M" class="button" type="button">Momentary</button>

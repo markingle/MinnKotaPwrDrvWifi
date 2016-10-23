@@ -23,7 +23,8 @@ const char WiFiAPPSK[] = "Mk";
 //These will need to be updated to the GPIO pins for each control circuit.
 int LED1 = 2;
 int LED2 = 16;
-//int button = 5;
+const int ANALOG_PIN = A0;
+int SPEED_PIN = 5;
 
 //boolean LED1State = false;
 //boolean LED2State = false;
@@ -107,6 +108,11 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
             //analogWrite(13,atoi((const char *)payload));
             Serial.printf("Payload");
             Serial.printf("[%u] Analog GPIO Control Msg: %s\n", num, payload);
+            Serial.println((char *)payload);
+            int temp = atoi((char *)payload);
+            uint32_t rgb = (uint32_t) strtol((const char *) &payload[1], NULL, 16);
+            analogWrite(SPEED_PIN,temp);
+            Serial.printf("Intger %u\n", temp);
          }
          break;
          
@@ -173,10 +179,12 @@ void setup() {
 
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
+  pinMode(SPEED_PIN, OUTPUT);
  
 
   digitalWrite(LED1, HIGH);
   digitalWrite(LED2, HIGH);
+  digitalWrite(SPEED_PIN, LOW);
   
   Serial.begin(115200);
   SPIFFS.begin();
