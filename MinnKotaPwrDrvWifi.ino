@@ -64,7 +64,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
         case WStype_TEXT:
             if (payload[0] == '#')
               {
-                Serial.printf("[%u] Relay Control Msg: %s\n", num, payload);
+                Serial.printf("[%u] Digital GPIO Control Msg: %s\n", num, payload);
                 if (payload[1] == 'C')
                 {
                   if (payload[2] == 'D')
@@ -94,7 +94,22 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
                   break;
                 }
                 break;
-              }   
+              }
+            if (payload[0] == 'S')
+              {
+                Serial.printf("[%u] Analog GPIO Control Msg: %s\n", num, payload);
+              }
+              
+         case WStype_BIN:
+         {
+            USE_SERIAL.printf("[%u] get binary lenght: %u\n", num, lenght);
+            //hexdump(payload, lenght);
+            //analogWrite(13,atoi((const char *)payload));
+            Serial.printf("Payload");
+            Serial.printf("[%u] Analog GPIO Control Msg: %s\n", num, payload);
+         }
+         break;
+         
          case WStype_ERROR:
             USE_SERIAL.printf(WStype_ERROR + " Error [%u] , %s\n",num, payload); 
     }
