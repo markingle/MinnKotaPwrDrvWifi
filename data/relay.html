@@ -57,50 +57,80 @@
 	</div>
 	<script src="jquery-1.12.3.min.js"></script>
 	<script>
-		touchStart1 = function(e) {
+		touchStartC= function(e) {
 		console.log("#CD");
 		connection.send("#CD");
 		}
 		
-		touchEnd1 = function(e) {
+		touchEndC = function(e) {
 		console.log("#CU");
 		connection.send("#CU");
 		}
 		
-		touchStart2 = function(e) {
+		touchStartI = function(e) {
 		console.log("#ID");
 		connection.send("#ID");
 		}
 		
-		touchEnd2 = function(e) {
+		touchEndI = function(e) {
 		console.log("#IU");
 		connection.send("#IU");
 		}
 
-		//function throttle(e) {
-		//console.log("Throttle Value Input via slider: " + e.value);
-		//console.log("Throttle id Input via slider: " + e.id);
-		//}
-
-		function addListeners(){
+		touchStartM = function(e) {
+		console.log("#MD");
+		connection.send("#MD");
+		}
 		
-		document.getElementById('C').addEventListener("touchstart", touchStart1);
-		document.getElementById('C').addEventListener("touchend", touchEnd1);
-		document.getElementById('I').addEventListener("touchstart", touchStart2);
-		document.getElementById('I').addEventListener("touchend", touchEnd2);
-		document.getElementById('M').addEventListener("touchstart", touchStart2);
-		document.getElementById('M').addEventListener("touchend", touchEnd2);
-		document.getElementById('L').addEventListener("touchstart", touchStart1);
-		document.getElementById('L').addEventListener("touchend", touchEnd1);
-		document.getElementById('R').addEventListener("touchstart", touchStart2);
-		document.getElementById('R').addEventListener("touchend", touchEnd2);
-		document.getElementById('T').addEventListener("touchstart", touchStart1);
-		document.getElementById('T').addEventListener("touchend", touchEnd1);
-		//document.getElementById('speed_id').addEventListener("change", throttle);
+		touchEndM = function(e) {
+		console.log("#MU");
+		connection.send("#MU");
+		}
 
+		touchStartL = function(e) {
+		console.log("#LD");
+		connection.send("#LD");
+		}
 		
-			
-			}
+		touchEndL = function(e) {
+		console.log("#LU");
+		connection.send("#LU");
+		}
+
+		touchStartR = function(e) {
+		console.log("#RD");
+		connection.send("#RD");
+		}
+		
+		touchEndR = function(e) {
+		console.log("#RU");
+		connection.send("#RU");
+		}
+
+		function addListeners()
+		{
+		
+			document.getElementById('C').addEventListener("touchstart", touchStartC);
+			document.getElementById('C').addEventListener("touchend", touchEndC);
+
+			document.getElementById('I').addEventListener("touchstart", touchStartI);
+			document.getElementById('I').addEventListener("touchend", touchEndI);
+
+			document.getElementById('M').addEventListener("touchstart", touchStartM);
+			document.getElementById('M').addEventListener("touchend", touchEndM);
+
+			document.getElementById('L').addEventListener("touchstart", touchStartL);
+			document.getElementById('L').addEventListener("touchend", touchEndL);
+
+			document.getElementById('R').addEventListener("touchstart", touchStartR);
+			document.getElementById('R').addEventListener("touchend", touchEndR);
+
+			//document.getElementById('T').addEventListener("touchstart", touchStart1);
+			//document.getElementById('T').addEventListener("touchend", touchEnd1);
+
+			//document.getElementById('speed_id').addEventListener("change", throttle);	
+		}
+
 window.addEventListener("load", addListeners); 
 
 		function mouseDown(e) {
@@ -117,13 +147,13 @@ window.addEventListener("load", addListeners);
     <script type="text/javascript">
 	
 	var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
-		connection.onopen = function () {  connection.send('Relay'); };
+		connection.onopen = function () {  connection.send('Init Conn'); };
 		console.log("temp connection opened");
 		connection.onerror = function (error) { console.log('WebSocket Error ', error); };
 	
-	function buttonclick(e) {
-			connection.send("#" + e.id);
-	}
+	//function buttonclick(e) {
+			//connection.send("#" + e.id);
+	//}
     </script>
 </body>
 

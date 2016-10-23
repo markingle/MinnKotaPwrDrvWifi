@@ -18,13 +18,13 @@ const char WiFiAPPSK[] = "Mk";
 #define USE_SERIAL Serial
 #define DBG_OUTPUT_PORT Serial
 
-
-//Yse the onboard LEDs for prototyping the code to support controling the PowerDriver.
 //These will need to be updated to the GPIO pins for each control circuit.
-int LED1 = 2;
-int LED2 = 16;
+int POWER = 5; //PIN D1
+int MOMENTARY = 4; //PIN D2
+int SPEED = 14; // PIN D5
+int LEFT = 12; // PIN D6
+int RIGHT = 13; // PIN D7
 const int ANALOG_PIN = A0;
-int SPEED_PIN = 5;
 
 //boolean LED1State = false;
 //boolean LED2State = false;
@@ -66,35 +66,62 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
             if (payload[0] == '#')
               {
                 Serial.printf("[%u] Digital GPIO Control Msg: %s\n", num, payload);
-                if (payload[1] == 'C')
-                {
-                  if (payload[2] == 'D')
-                    {
-                    Serial.printf("Direction Down");
-                    digitalWrite(LED2, LOW);
-                    }
-                  if (payload[2] == 'U')
-                    {
-                    Serial.printf("Direction Up");
-                    digitalWrite(LED2, HIGH);
-                    }
-                  break;
-                }
                 if (payload[1] == 'I')
                 {
                   if (payload[2] == 'D')
                     {
                     Serial.printf("Direction Down");
-                    digitalWrite(LED1, LOW);
+                    digitalWrite(POWER, HIGH);
                     }
                   if (payload[2] == 'U')
                     {
                     Serial.printf("Direction Up");
-                    digitalWrite(LED1, HIGH);
+                    digitalWrite(POWER, LOW);
                     }
                   break;
                 }
-                break;
+                if (payload[1] == 'M')
+                {
+                  if (payload[2] == 'D')
+                    {
+                    Serial.printf("Direction Down");
+                    digitalWrite(MOMENTARY, HIGH);
+                    }
+                  if (payload[2] == 'U')
+                    {
+                    Serial.printf("Direction Up");
+                    digitalWrite(MOMENTARY, LOW);
+                    }
+                  break;
+                }
+                if (payload[1] == 'L')
+                {
+                  if (payload[2] == 'D')
+                    {
+                    Serial.printf("Direction Down");
+                    digitalWrite(LEFT, HIGH);
+                    }
+                  if (payload[2] == 'U')
+                    {
+                    Serial.printf("Direction Up");
+                    digitalWrite(LEFT, LOW);
+                    }
+                  break;
+                 }
+                 if (payload[1] == 'R')
+                 {
+                  if (payload[2] == 'D')
+                    {
+                    Serial.printf("Direction Down");
+                    digitalWrite(RIGHT, HIGH);
+                    }
+                  if (payload[2] == 'U')
+                    {
+                    Serial.printf("Direction Up");
+                    digitalWrite(RIGHT, LOW);
+                    }
+                  break;
+                 }
               }
             if (payload[0] == 'S')
               {
@@ -111,7 +138,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
             Serial.println((char *)payload);
             int temp = atoi((char *)payload);
             uint32_t rgb = (uint32_t) strtol((const char *) &payload[1], NULL, 16);
-            analogWrite(SPEED_PIN,temp);
+            analogWrite(SPEED,temp);
             Serial.printf("Intger %u\n", temp);
          }
          break;
@@ -177,14 +204,17 @@ void setupWiFi()
 
 void setup() {
 
-  pinMode(LED1, OUTPUT);
-  pinMode(LED2, OUTPUT);
-  pinMode(SPEED_PIN, OUTPUT);
- 
+  pinMode(POWER, OUTPUT);
+  pinMode(MOMENTARY, OUTPUT);
+  pinMode(SPEED, OUTPUT);
+  pinMode(LEFT, OUTPUT);
+  pinMode(RIGHT, OUTPUT);
 
-  digitalWrite(LED1, HIGH);
-  digitalWrite(LED2, HIGH);
-  digitalWrite(SPEED_PIN, LOW);
+  digitalWrite(POWER, LOW);
+  digitalWrite(MOMENTARY, LOW);
+  digitalWrite(SPEED, LOW);
+  digitalWrite(LEFT, LOW);
+  digitalWrite(RIGHT, LOW);
   
   Serial.begin(115200);
   SPIFFS.begin();
