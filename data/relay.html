@@ -47,7 +47,6 @@
 	<div id="centerapp" ><b>PowerDriver Protoype Test App</b></div>
 	<label for="points">SPEED CONTROL</label>
 	<input type="range" name="speed_name" id="speed_id" value="0" min="0" max="1023" onchange="connection.send(this.value)">
-	<button id="C" class="button" type="button">Constant On</button> 
 	<button id="I" class="button" type="button">ON/OFF</button>
 	<button id="M" class="button" type="button">Momentary</button>
 	<button id="L" class="button" type="button">Left Turn</button>
@@ -57,15 +56,15 @@
 	</div>
 	<script src="jquery-1.12.3.min.js"></script>
 	<script>
-		touchStartC= function(e) {
-		console.log("#CD");
-		connection.send("#CD");
-		}
+		//touchStartC= function(e) {
+		//console.log("#CD");
+		//connection.send("#CD");
+		//}
 		
-		touchEndC = function(e) {
-		console.log("#CU");
-		connection.send("#CU");
-		}
+		//touchEndC = function(e) {
+		//console.log("#CU");
+		//connection.send("#CU");
+		//}
 		
 		touchStartI = function(e) {
 		console.log("#ID");
@@ -110,8 +109,8 @@
 		function addListeners()
 		{
 		
-			document.getElementById('C').addEventListener("touchstart", touchStartC);
-			document.getElementById('C').addEventListener("touchend", touchEndC);
+			//document.getElementById('C').addEventListener("touchstart", touchStartC);
+			//document.getElementById('C').addEventListener("touchend", touchEndC);
 
 			document.getElementById('I').addEventListener("touchstart", touchStartI);
 			document.getElementById('I').addEventListener("touchend", touchEndI);
