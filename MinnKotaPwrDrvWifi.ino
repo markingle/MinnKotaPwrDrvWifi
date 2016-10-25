@@ -40,6 +40,10 @@ ESP8266WebServer server(80);
 // Create a Websocket server
 WebSocketsServer webSocket(81);
 
+extern "C" {
+uint16 readvdd33(void);
+}
+
 void handleRoot() {
   server.send(200, "text/html", "<h1>You are connected</h1>");
 }
@@ -243,7 +247,10 @@ void setup() {
   
   server.begin();
   Serial.println("HTTP server started");
-
+  float value=readvdd33();
+ 
+  Serial.print("Vcc:");
+  Serial.println(value/1000);
 
 //+++++++ MDNS will not work when WiFi is in AP mode but I am leave this code in place incase this changes++++++
 //if (!MDNS.begin("esp8266")) {
