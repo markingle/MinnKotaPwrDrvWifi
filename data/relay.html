@@ -45,14 +45,17 @@
 
 <body>
 	<div id="centerapp" ><b>PowerDriver Protoype Test App</b></div>
-	<label for="points">SPEED CONTROL</label>
-	<input type="range" name="speed_name" id="speed_id" value="0" min="0" max="1023" onchange="connection.send(this.value)">
+	<div>
+	
 	<button id="I" class="button" type="button">ON/OFF</button>
 	<button id="M" class="button" type="button">Momentary</button>
 	<button id="L" class="button" type="button">Left Turn</button>
 	<button id="R" class="button" type="button">Right Turn</button>
 	<button id="T" class="button" type="button">Test Comms</button>
-	
+	</div>
+	<div>
+	<label for="points">SPEED CONTROL</label>
+	<input type="range" orient="vertical" style="-webkit-appearance: slider-vertical;" name="speed_name" id="speed_id" value="0" min="0" max="1023" onchange="connection.send(this.value)">
 	</div>
 	<script src="jquery-1.12.3.min.js"></script>
 	<script>
