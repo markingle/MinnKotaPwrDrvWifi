@@ -2,30 +2,98 @@
 <html>
 
 <head>
-    
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width">
     <title>PowerDrive Wifi</title>
     <style type="text/css">
      <style>
 
-     	input[type=range]::-webkit-slider-thumb {
+     	input[type=range] {
+  -webkit-appearance: slider-vertical;
+  width: 100%;
+  margin: 15.8px 0;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 40px;
+  width: 16px;
+  border-radius: 3px;
+  background: #c1ffff;
+  cursor: pointer;
+  -webkit-appearance: slider-vertical;
+  margin-top: -16px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 40px;
+  width: 16px;
+  border-radius: 3px;
+  background: #c1ffff;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+  background: #3071a9;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 40px;
+  width: 16px;
+  border-radius: 3px;
+  background: #c1ffff;
+  cursor: pointer;
+  height: 8.4px;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #3071a9;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #367ebd;
+}
 
-			-webkit-appearance: none;
-  			border: 1px solid #000000;
-  			height: 36px;
-  			width: 16px;
-  			border-radius: 3px;
-  			background: #ffffff;
-  			cursor: pointer;
-  			margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-  			box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
-		}
-
-        input[type=range]::-ms-track {
-  			height: 100%;
-  			width: 100%;
-  			cursor: pointer;
-  		}
 
           /* misc start */
           *{
@@ -215,17 +283,9 @@
 		connection.send("#ID");
 		}
 		
-		touchEndI = function(e)
-		{
-			var lastTouchEnd = 0;
-			var now = (new Date()).getTime();
-			if (now - lastTouchEnd <= 300) 
-			{
-				event.preventDefault();
-			}
-			lastTouchEnd = now;
-			console.log("#IU");
-			connection.send("#IU");
+		touchEndI = function(e) {
+		console.log("#IU");
+		connection.send("#IU");
 		}
 
 		touchStartM = function(e) {
@@ -266,7 +326,7 @@
 
 			document.getElementById('I').addEventListener("touchstart", touchStartI);
 			document.getElementById('I').addEventListener("touchend", touchEndI);
-			
+
 			document.getElementById('M').addEventListener("touchstart", touchStartM);
 			document.getElementById('M').addEventListener("touchend", touchEndM);
 
@@ -280,19 +340,8 @@
 			//document.getElementById('T').addEventListener("touchend", touchEnd1);
 
 			//document.getElementById('speed_id').addEventListener("change", throttle);	
-			
 		}
 
-		function gestureChange(event)
-		{
-			event.preventDefault
-		}
-
-		function gestureStart(event)
-		{
-			event.preventDefault
-		}
-		
 window.addEventListener("load", addListeners); 
 
 		function mouseDown(e) {
