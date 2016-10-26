@@ -2,6 +2,7 @@
 #include <ESP8266WebServer.h>
 #include <FS.h>
 #include <WebSocketsServer.h>
+#include <WebSocketClient.h>
 
 // state machine states
 unsigned int state;
@@ -251,6 +252,8 @@ void setup() {
  
   Serial.print("Vcc:");
   Serial.println(value/1000);
+
+  int voltage = value/1000;
 
 //+++++++ MDNS will not work when WiFi is in AP mode but I am leave this code in place incase this changes++++++
 //if (!MDNS.begin("esp8266")) {
