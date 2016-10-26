@@ -1,7 +1,8 @@
-#include <ESP8266WiFi.h> 
+#include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <FS.h>
 #include <WebSocketsServer.h>
+
 
 // state machine states
 unsigned int state;
@@ -12,6 +13,7 @@ unsigned int state;
 
 uint8_t remote_ip;
 uint8_t socketNumber;
+float value;
 
 const char WiFiAPPSK[] = "Mk";
 
@@ -49,7 +51,15 @@ void handleRoot() {
 }
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) {
-
+    String text = String((char *) &payload[0]);
+    char * textC = (char *) &payload[0];
+    String voltage;
+    String temp;
+    int nr;
+    int on;
+    uint32_t rmask;
+    int i;
+    
     switch(type) {
         case WStype_DISCONNECTED:
             //Reset the control for sending samples of ADC to idle to allow for web server to respond.
@@ -69,6 +79,11 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
         case WStype_TEXT:
             if (payload[0] == '#')
               {
+                value=readvdd33();
+                Serial.print("Vcc:");
+                Serial.println(value/1000);
+                voltage = String(value/1000);
+                webSocket.sendTXT(num, voltage);
                 Serial.printf("[%u] Digital GPIO Control Msg: %s\n", num, payload);
                 if (payload[1] == 'I')
                 {
@@ -143,6 +158,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
             int temp = atoi((char *)payload);
             uint32_t rgb = (uint32_t) strtol((const char *) &payload[1], NULL, 16);
             analogWrite(SPEED,temp);
+            webSocket.sendTXT(num,"Got Speed Change");
             Serial.printf("Intger %u\n", temp);
          }
          break;
@@ -247,10 +263,8 @@ void setup() {
   
   server.begin();
   Serial.println("HTTP server started");
-  float value=readvdd33();
+  
  
-  Serial.print("Vcc:");
-  Serial.println(value/1000);
 
 //+++++++ MDNS will not work when WiFi is in AP mode but I am leave this code in place incase this changes++++++
 //if (!MDNS.begin("esp8266")) {
