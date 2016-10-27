@@ -2,7 +2,6 @@
 #include <ESP8266WebServer.h>
 #include <FS.h>
 #include <WebSocketsServer.h>
-#include <WebSocketClient.h>
 
 
 // state machine states
@@ -22,9 +21,9 @@ const char WiFiAPPSK[] = "Mk";
 #define DBG_OUTPUT_PORT Serial
 
 //These will need to be updated to the GPIO pins for each control circuit.
-int POWER = 5; //PIN D1
+int POWER = 5; //PIN D1 5
 int MOMENTARY = 4; //PIN D2
-int SPEED = 14; // PIN D5
+int SPEED = 14; // PIN D5 14
 int LEFT = 12; // PIN D6
 int RIGHT = 13; // PIN D7
 const int ANALOG_PIN = A0;
@@ -56,6 +55,8 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
     char * textC = (char *) &payload[0];
     String voltage;
     String temp;
+    float percentage;
+    float actual_voltage;  //voltage calculated based on percentage drop from 5.0 circuit.
     int nr;
     int on;
     uint32_t rmask;
@@ -80,13 +81,19 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
         case WStype_TEXT:
             if (payload[0] == '#')
               {
+                Serial.printf("[%u] Digital GPIO Control Msg: %s\n", num, payload);
+                if (payload[1] == 'I')
                 value=readvdd33();
                 Serial.print("Vcc:");
                 Serial.println(value/1000);
-                voltage = String(value/1000);
+                percentage = (value/1000)/3.0;
+                Serial.print("percentage:");
+                Serial.println(percentage);
+                actual_voltage = 11.8*percentage; //Using 11.8 to conservative
+                Serial.print("act_volt:");
+                Serial.println(percentage);
+                voltage = String(actual_voltage);
                 webSocket.sendTXT(num, voltage);
-                Serial.printf("[%u] Digital GPIO Control Msg: %s\n", num, payload);
-                if (payload[1] == 'I')
                 {
                   if (payload[2] == 'D')
                     {
@@ -159,7 +166,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
             int temp = atoi((char *)payload);
             uint32_t rgb = (uint32_t) strtol((const char *) &payload[1], NULL, 16);
             analogWrite(SPEED,temp);
-            webSocket.sendTXT(num,"Got Speed Change");
+            //webSocket.sendTXT(num,"Got Speed Change");
             Serial.printf("Intger %u\n", temp);
          }
          break;
@@ -264,10 +271,6 @@ void setup() {
   
   server.begin();
   Serial.println("HTTP server started");
-  
- 
-
-  int voltage = value/1000;
 
 //+++++++ MDNS will not work when WiFi is in AP mode but I am leave this code in place incase this changes++++++
 //if (!MDNS.begin("esp8266")) {

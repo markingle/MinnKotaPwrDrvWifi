@@ -204,38 +204,32 @@
 	<script src="raphael-2.1.4.min.js"></script>
     <script src="justgage.js"></script>
 	<script type="text/javascript">
+	
 	var g1;
 	var A0;
-    document.addEventListener("DOMContentLoaded", function(event) {
+	A0 = 0;
+   	document.addEventListener("DOMContentLoaded", function(event) {
 		console.log("DOM fully loaded and parsed");
-        g1 = new JustGage({
-            id: "g1",
-            value: 6,
-            min: 0,
-            max: 12,
-            donut: false,
+       	g1 = new JustGage({
+           	id: "g1",
+           	decimals: true,
+    	    value: A0,
+       	    min: 0,
+	        max: 12,
+			donut: false,
 			pointer: true,
-            gaugeWidthScale: 0.6,
-            counter: true,
+			gaugeWidthScale: 0.6,
+			counter: true,
             hideInnerShadow: true,
 			title: "Voltage",
-			titlePosition: "below"
-        });
-	});
-	
-	var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
-	//var connection = new WebSocket('ws://192.168.4.1:81/', ['arduino']);
-	connection.onopen = function () {  connection.send('Init Conn'); };
-	console.log("temp connection opened");
-	connection.onerror = function (error) { console.log('WebSocket Error ', error); };
-	connection.onmessage = function (e)
-	{ 
-		var A0 = (e.data);
-		g1.refresh(A0, null);
-		console.log('voltage: ', e.data);
-		
-	 };
+			titlePosition: "below",
+			customSectors : [{"lo":0,"hi":4,"color":"#ff0000"},
+				{"lo":5,"hi":8,"color":"#ffff00"},
+				{"lo":9,"hi":12,"color":"#00cc00"}]
+			});
+    	});
 
+	window.addEventListener("load", addListeners); 
 		
 	touchStartI = function(e) 
 	{
@@ -312,19 +306,26 @@
 			//document.getElementById('T').addEventListener("touchstart", touchStart1);
 			//document.getElementById('T').addEventListener("touchend", touchEnd1);
 
-			//document.getElementById('speed_id').addEventListener("change", throttle);	
-			
+			//document.getElementById('speed_id').addEventListener("change", throttle);
+		
 	}
+	
 
-	function gestureChange(e)
-	{
-		e.preventDefault
-	}
+    </script>
+    <script type="text/javascript">
+	
+	var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
+	//var connection = new WebSocket('ws://192.168.4.1:81/', ['arduino']);
+	connection.onopen = function () {  connection.send('Init Conn'); };
+	console.log("temp connection opened");
+	connection.onerror = function (error) { console.log('WebSocket Error ', error); };
+	connection.onmessage = function (ev)
+		{ 
+			var A0 = (ev.data);
+			g1.refresh(A0, null);
+			console.log('voltage: ', ev.data);
+	 	};
 
-	function gestureStart(e)
-	{
-		e.preventDefault
-	}
     </script>
 </body>
 
