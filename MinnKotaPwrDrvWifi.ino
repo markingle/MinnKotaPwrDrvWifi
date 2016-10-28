@@ -80,10 +80,13 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
  
         case WStype_TEXT:
             if (payload[0] == '#')
-              {
                 Serial.printf("[%u] Digital GPIO Control Msg: %s\n", num, payload);
                 if (payload[1] == 'I')
-                value=readvdd33();
+                {
+                  if (payload[2] == 'D')
+                    {
+                    Serial.printf("Direction Down");
+                    value=readvdd33();
                 Serial.print("Vcc:");
                 Serial.println(value/1000);
                 percentage = (value/1000)/3.0;
@@ -94,10 +97,6 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
                 Serial.println(percentage);
                 voltage = String(actual_voltage);
                 webSocket.sendTXT(num, voltage);
-                {
-                  if (payload[2] == 'D')
-                    {
-                    Serial.printf("Direction Down");
                     digitalWrite(POWER, HIGH);
                     }
                   if (payload[2] == 'U')
@@ -149,7 +148,6 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
                     }
                   break;
                  }
-              }
             if (payload[0] == 'S')
               {
                 Serial.printf("[%u] Analog GPIO Control Msg: %s\n", num, payload);
