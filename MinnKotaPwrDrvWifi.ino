@@ -21,7 +21,7 @@ const char WiFiAPPSK[] = "Mk";
 #define DBG_OUTPUT_PORT Serial
 
 //These will need to be updated to the GPIO pins for each control circuit.
-int POWER = 5; //PIN D1 5
+int POWER = 5; //PIN D1 5 REMEMBER TO RESET PIN MODE WHEN 5 and 14 ARE CHANGED
 int MOMENTARY = 4; //PIN D2
 int SPEED = 14; // PIN D5 14
 int LEFT = 12; // PIN D6
